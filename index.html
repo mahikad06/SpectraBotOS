@@ -6,23 +6,37 @@
   <!--welcome screen-->
   <div class="window" id="welcome" style="
         transform: translate(-50%, -50%); top: 25%; left: 15%">
-        <h1 style="padding: 4px; margin: 4px; border-radius: 10px; background-color: #2a8fc2; color: #fff"> Underwater OS </h1>
-        <p> Welcome! </p>
-        <img style="width: 225px; height: 90px; border-radius:32px; object-fit:cover" src="./beach_background_start.jpg" />
+        <div class="windowheader" id="welcomeheader">
+            <h1 style="padding: 4px; margin: 4px; border-radius: 10px; background-color: #2a8fc2; color: #fff"> Underwater OS </h1>
+            <p> Welcome! </p>
+            <img style="width: 225px; height: 90px; border-radius:32px; object-fit:cover" src="./beach_background_start.jpg" />
 
-        <!--buttons-->
-        <p class="windowheader" id="welcomeheader"> Handle </p>
-        <p class="closebutton" id="welcomeclose"> Close </p>
+            <!--buttons-->
+            <p class="closebutton" id="welcomeclose"> Close </p>
+        </div>
     </div>
 
-    <!--top bar-->
-    <div style="display: flex; justify-content: space-between; padding: 2px; position: fixed; bottom: 0; left: 0; width: 99.5%; backdrop-filter: blur(5px); background-color:rgba(13, 56, 101, 0.4)">
+    <!--bottom bar-->
+    <div class="taskbar"style="display: flex; justify-content: space-between; padding: 2px; position: fixed; bottom: 0; left: 0; width: 99.5%; backdrop-filter: blur(5px); background-color:rgba(13, 56, 101, 0.4)">
         <p style="cursor: pointer" id="welcomeopen"> Underwater OS </p>
         <p id = "timeElement"> Time </p>
-
-
     </div>
     
+    <!--apps-->
+    <div id="desktopApps" style="padding-top: 64px; padding-left: 16px;"> 
+        <img src="./bubbleicon_1.png" style="width: 64px; height: 64px; border-radius: 20px;">
+        <p> Projects </p>
+        <div class="selected" styles="background-color: #2a8fc2"> </div>
+    </div>
+
+    <div class="window" id="projects" style="top: 65%; left: 20%">
+        <div class="windowheader" id="projectsheader">
+            <div class="closebutton" id="projectsclose"> </div>
+            <p class = "headertext"> Projects </p>
+            <p class="closebutton" id="projectsclose"> Close </p>
+        </div>
+    </div>
+
     <script src="script.js"> </script>
     <link rel="stylesheet" type="text/css" href="style.css" />
 
