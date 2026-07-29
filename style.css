@@ -1,0 +1,55 @@
+.closebutton {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(144, 224, 239, 0.6) 0%, rgba(0, 119, 182, 0.4) 100%);
+    box-shadow: 0 4px 15px rgba(0, 180, 216, 0.3), inset 0 2px 5px rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+    overflow: hidden;
+} 
+
+.closebutton::before {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 12px;
+    background-color: #ff7f50;
+    border-radius: 4px;
+    transform: rotate(45deg);
+    box-shadow: 7px -7px 0 -4.5px #ff7f50, -7px 7px 0 -4.5px #ff7f50;
+    transition: all 0.4s ease;
+}
+
+.closebutton::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 7px;
+    background-color: #ff7f50;
+    border-radius: 4px;
+    top: 10px;
+    transition: all 0.4s ease;
+}
+
+.window {
+    border: 0.5rem outset #87c0e4; 
+    width: 256px; 
+    padding: 16px; 
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
+    text-align: center; 
+    background-color:#9bcceb; 
+    position: absolute;
+}
+
+.windowheader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    cursor: grab;
+}
