@@ -1,4 +1,11 @@
-//Dragging Logic
+// INTERFACE
+
+// Time
+function updateTime() {
+            var timeText = document.querySelector("#timeElement");
+            timeText.innerHTML = new Date().toLocaleString();
+        }
+setInterval(updateTime, 1000);//Dragging Logic
 
 function dragElement(element) {
     var initialX = 0;
@@ -12,12 +19,12 @@ function dragElement(element) {
         element.onmousedown = startDragging;
     }
 
-
     function startDragging(e) {
         e = e || window.event;
         e.preventDefault();
         initialX = e.clientX;
         initialY = e.clientY;
+        element.classList.add("dragging");
         document.onmouseup = stopDragging;
         document.onmousemove = moveElement;
     }
@@ -36,57 +43,51 @@ function dragElement(element) {
     function stopDragging() {
         document.onmouseup = null;
         document.onmousemove = null;
+        element.classList.remove("dragging");
     }
 }
 
-// Time
-function updateTime() {
-            var timeText = document.querySelector("#timeElement");
-            timeText.innerHTML = new Date().toLocaleString();
-        }
-setInterval(updateTime, 1000);
+//Initialize Window
 
-//Drag Apps
-dragElement(document.getElementById("#welcome"));
-dragElement(document.getElementById("#projects"))
+function createWindow(element, defaultTop, defaultLeft) {
+    var screen = document.querySelector("#" + element);
+    var screenclose = document.querySelector("#"+element+"close");
+    var screenopen = document.querySelector("#"+element+"open");
+    
+    screenclose.addEventListener("click", function() {
+        closeWindow(screen);
+    });
+    screenopen.addEventListener("click", function() {
+        openWindow(screen, defaultTop, defaultLeft)
+    });
+    if (screen) {
+        addWindowTapHandling(screen);
+        dragElement(screen);
+    }
+}
 
-// Open and Close Windows
+
+// INTERACTION
+
+// Open and Close Windows Logic
+
+var biggestIndex = 1;
+var taskBar = document.querySelector("#taskbar");
 
 function closeWindow(element) {
     element.style.display = "none"
 }
 
-function openWindow(element) {
-    element.style.display = "flex" //try block instead later
+function openWindow(element, top, left) {
+    element.style.display = "block" 
+    element.style.top = top;
+    element.style.left = left;
     biggestIndex++; 
     element.style.zIndex = biggestIndex;
     taskBar.style.zIndex = biggestIndex + 1;
 }
 
-var welcomeScreen = document.querySelector("#welcome");
-var welcomeScreenClose = document.querySelector("#welcomeclose");
-var welcomeScreenOpen = document.querySelector("#welcomeopen");
-
-welcomeScreenClose.addEventListener("click", function() {
-    closeWindow(welcomeScreen);
-});
-welcomeScreenOpen.addEventListener("click", function() {
-    openWindow(welcomeScreen);
-});
-
-var projectsScreen = document.querySelector("#projects");
-var projectsScreenClose = document.querySelector("#projectsclose");
-var projectsScreenOpen = document.querySelector("#projectsopen");
-
-projectsScreenClose.addEventListener("click", function() {
-    closeWindow(projectsScreen);
-});
-projectsScreenOpen.addEventListener("click", function() {
-    openWindow(projectsScreen);
-});
-
-
-//Open Apps
+// Open Apps
 
 var selectedIcon = undefined;
 
@@ -100,19 +101,17 @@ function deselectIcon(element) {
     selectedIcon = undefined;
 }
 
-function handleIconTap(element) {
+function handleIconTap(element, targetWindow) {
     if (element.classList.contains("selected")) {
         deselectIcon(element)
-        openWindow(window)
+        openWindow(targetWindow)
     } else {
+        if (selectedIcon) deselectIcon(selectedIcon);
         selectIcon(element)
     }
 }
 
-// Rise Up
-
-var biggestIndex = 1;
-var taskBar = document.querySelector("#taskbar");
+// Tab Layering
 
 function addWindowTapHandling(element) {
     element.addEventListener("mousedown", () =>
@@ -124,13 +123,25 @@ function handleWindowTap(element) {
     biggestIndex++;
     element.style.zIndex = biggestIndex;
     taskBar.style.zIndex = biggestIndex + 1;
-    deselectIcon(selectedIcon)
+    if (selectedIcon) {
+        deselectIcon(selectedIcon);
+    }
 }
 
-//Initialize Window
-
-function createWindow(element) {
-    var screen = document.querySelector("#" + element);
-    addWindowTapHandling(screen);
-    dragElement(screen);
+var appIcon = document.querySelector("#desktopApps");
+if (appIcon && projectsScreen) {
+    appIcon.addEventListener("click", function(e) {
+        e.stopPropagation();
+        handleIconTap(appIcon, projectsScreen);
+    });
 }
+
+document.addEventListener("click", function() {
+    if (selectedIcon) deselectIcon(selectedIcon);
+});
+
+
+// APPS
+
+createWindow("welcome", "25%", "20%");
+createWindow("projects", "30%", "20%");

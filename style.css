@@ -1,41 +1,29 @@
+/* Close Button */
 .closebutton {
     position: relative;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(144, 224, 239, 0.6) 0%, rgba(0, 119, 182, 0.4) 100%);
-    box-shadow: 0 4px 15px rgba(0, 180, 216, 0.3), inset 0 2px 5px rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(4px);
+    width: 24px;
+    height: 24px;
+    background-color: #ff7f50;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    filter: drop-shadow(0 2px 4px rgba(0,180,216,0.3));
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.4s ease;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease;
     overflow: hidden;
 } 
 
-.closebutton::before {
-    content: '';
-    position: absolute;
-    width: 3px;
-    height: 12px;
-    background-color: #ff7f50;
-    border-radius: 4px;
-    transform: rotate(45deg);
-    box-shadow: 7px -7px 0 -4.5px #ff7f50, -7px 7px 0 -4.5px #ff7f50;
-    transition: all 0.4s ease;
+.closebutton:hover {
+    transform: scale(1.2) rotate(72deg);
+    background-color: #ff5f2e;
+    filter: drop-shadow(0 0 4px rgba(255, 95, 46, 0.8));
 }
 
-.closebutton::after {
-    content: '';
-    position: absolute;
-    width: 3px;
-    height: 7px;
-    background-color: #ff7f50;
-    border-radius: 4px;
-    top: 10px;
-    transition: all 0.4s ease;
+.closebutton:active {
+    transform: scale(0.92);
+    background: radial-gradient(circle, rgba(3, 4, 94, 0.6) 0%, rgba(0, 119, 182, 0.8) 100%);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
+
+/* Windows */
 
 .window {
     border: 0.5rem outset #87c0e4; 
@@ -44,7 +32,16 @@
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
     text-align: center; 
     background-color:#9bcceb; 
+    border-radius: 18px;
+    box-shadow: 0 24px 60px #003b5c;
+    backdrop-filter: blur(18px);
     position: absolute;
+    transition: transform 0.25s ease-out, opacity 0.2s ease-out, box-shadow 0.25s ease-out;
+}
+
+.window.dragging {
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
+    transform: scale(1.02);
 }
 
 .windowheader {
@@ -52,4 +49,51 @@
     display: flex;
     align-items: center;
     cursor: grab;
+    justify-content: space-between;
 }
+
+.windowheader:active {
+    cursor: grabbing;
+}
+
+/* Apps */
+
+.desktopApps {
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+.desktopApps img {
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.desktopApps:hover img {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 12px rgba(144, 224, 239, 0.9));
+    animation: oceanPulse 2s infinite ease-in-out;
+}
+
+.desktopApps:hover p {
+    color: #90e0ef !important;
+    text-shadow: 0 0 8px rgba(0, 180, 216, 1) !important;
+    font-weight: bold;
+}
+
+@keyframes oceanPulse {
+    0% {
+        filter: drop-shadow(0 0 8px rgba(144, 224, 239, 0.6));
+        transform: translateY(0px) scale(1.05);
+    }
+    50% {
+        filter: drop-shadow(0 0 18px rgba(0, 180, 216, 1));
+        transform: translateY(-4px) scale(1.08);
+    }
+    100% {
+        filter: drop-shadow(0 0 8px rgba(144, 224, 239, 0.6));
+        transform: translateY(0px) scale(1.05);
+    }
+}
+
+/* octopus holding tabs for task view/mission control
+set locations for each app, scale down the size, 
+and if they are in use (visible) they will show up */
